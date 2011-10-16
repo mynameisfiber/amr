@@ -1,3 +1,7 @@
 *.dat
 *.sw[po]
 *.pyc
+a.out
+gmon.out
+triangle/triangle
+mesh

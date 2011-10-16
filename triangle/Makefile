@@ -2,7 +2,7 @@
 CFLAG=
 
 triangle: triangle.c
-	gcc -c triangle.o -lm -DTRILIBRARY -O3 $(CFLAG)
+	gcc -o triangle triangle.c -lm -O3 $(CFLAG)
 
 clean:
 	rm -rf *.o

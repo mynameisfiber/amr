@@ -40,3 +40,19 @@ bool Mesh::remove_cell(Cell *item)
   }
   return false;
 }
+
+int main()
+{
+  Mesh mesh({0.0, 0.0}, 0);
+
+  for(int i=0; i<200; i++) {
+    Cell cell( {2.0*rand()/RAND_MAX-1.0,
+                2.0*rand()/RAND_MAX-1.0},
+               1);
+    cell.data[0] = rand()/10.0;
+    mesh.add_cell(&cell);
+  }
+  printf("Mesh has %u cells\n",mesh.cells.size());
+
+  return 0;
+}

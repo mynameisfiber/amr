@@ -1,4 +1,5 @@
 #define REAL double
+#define TRILIBRARY
 #include "triangle/triangle.h"
 #include "cell.hpp"
 #include <vector>
@@ -9,38 +10,26 @@ using namespace std;
 
 struct Boundary
 {
-  double start[2], end[2]; // Endpoints of the boundary
-  short int orientation;   // Orientation of boundary
-  double length;           // Length of the boundary
-  double distance;         // Distance to the center of the local mesh
-  int neighboor;           // MPI id of the neighboor on this boundary
-
-  ~Boundary() {
-    free(&start);
-    free(&end);
-  }
+  vector<double> start, end; // Endpoints of the boundary
+  short int orientation;     // Orientation of boundary
+  double length;             // Length of the boundary
+  double distance;           // Distance to the center of the local mesh
+  int neighboor;             // MPI id of the neighboor on this boundary
 };
 
 class Mesh
 {
   public:
-    double center[2];             // Physical location of the center of the mesh
+    vector<double> center;        // Physical location of the center of the mesh
     vector<Boundary*> boundaries; // Vector of the bounding faces of this mesh
     vector<Cell*> cells;          // Vector of the cells contained in this mesh
     int nghosts;                  // Number of ghosts needed.  This will change depth of cells outside boundary
     int meshID;                   // MPI ID of this Mesh
 
-    Mesh(double icenter[2], vector<Boundary*> inboundaries, int innghosts) : nghosts(innghosts), boundaries(inboundaries) {
-      memcpy(center, icenter, 2 * sizeof(double));
+    Mesh(vector<double> icenter, int innghosts) : center(icenter), nghosts(innghosts) {
       meshID     = 0;
       cells      = vector<Cell*>();
       boundaries = vector<Boundary*>();
-    }
-
-    ~Mesh() {
-      delete[] &boundaries;
-      delete[] &cells;
-      free(&center);
     }
 
     // Add a cell to the current mesh.  Return False if the cell is outside of boundary
