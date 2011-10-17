@@ -1,6 +1,3 @@
-#define REAL double
-#define TRILIBRARY
-#include "triangle/triangle.h"
 #include "cell.hpp"
 #include <vector>
 #include <cstring>
@@ -21,15 +18,15 @@ class Mesh
 {
   public:
     vector<double> center;        // Physical location of the center of the mesh
-    vector<Boundary*> boundaries; // Vector of the bounding faces of this mesh
-    vector<Cell*> cells;          // Vector of the cells contained in this mesh
+    vector<Boundary> boundaries; // Vector of the bounding faces of this mesh
+    vector<Cell> cells;          // Vector of the cells contained in this mesh
     int nghosts;                  // Number of ghosts needed.  This will change depth of cells outside boundary
     int meshID;                   // MPI ID of this Mesh
 
     Mesh(vector<double> icenter, int innghosts) : center(icenter), nghosts(innghosts) {
       meshID     = 0;
-      cells      = vector<Cell*>();
-      boundaries = vector<Boundary*>();
+      cells      = vector<Cell>();
+      boundaries = vector<Boundary>();
     }
 
     // Add a cell to the current mesh.  Return False if the cell is outside of boundary
