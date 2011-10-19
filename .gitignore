@@ -3,5 +3,6 @@
 *.dat
 
 triangle/triangle
+triangle/example/*_prb
 mesh
 
