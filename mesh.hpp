@@ -8,10 +8,10 @@ class Mesh;
 struct Boundary
 {
   std::vector<double> start, end; // Endpoints of the boundary
-  int orientation;     // Orientation of boundary
-  double length;             // Length of the boundary
-  double distance;           // Distance to the center of the local mesh
-  int neighboor;             // MPI id of the neighboor on this boundary
+  int orientation;                // Orientation of boundary
+  double length;                  // Length of the boundary
+  double distance;                // Distance to the center of the local mesh
+  int neighboor;                  // MPI id of the neighboor on this boundary
 
   Boundary(Mesh *mesh, std::vector<double> instart, std::vector<double> inend);
 };
@@ -19,11 +19,12 @@ struct Boundary
 class Mesh
 {
   public:
-    std::vector<double> center;        // Physical location of the center of the mesh
+    std::vector<double> center;       // Physical location of the center of the mesh
     std::vector<Boundary> boundaries; // std::vector of the bounding faces of this mesh
     std::vector<Cell> cells;          // std::vector of the cells contained in this mesh
-    int nghosts;                  // Number of ghosts needed.  This will change depth of cells outside boundary
-    int meshID;                   // MPI ID of this Mesh
+    int nghosts;                      // Number of ghosts needed.  This will change 
+                                      //  depth of cells outside boundary
+    int meshID;                       // MPI ID of this Mesh
 
     Mesh(std::vector<double> icenter, int innghosts) : center(icenter), nghosts(innghosts) {
       meshID     = 0;

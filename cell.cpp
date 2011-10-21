@@ -22,7 +22,9 @@ void Cell::write(FILE *fd)
   fprintf(fd, "%f %f ",x[0], x[1]);
   
   for( auto b = faces.begin(); b != faces.end(); b++) {
-    fprintf(fd, "%f %f %f %f %d ",b->start[0], b->start[1], b->end[0], b->end[1], b->orientation);
+    fprintf(fd, "%f %f %f %f %d ", b->start[0], b->start[1], 
+                                   b->end  [0], b->end  [1], 
+                                   b->orientation);
   }
 
   fprintf(fd, "\n");

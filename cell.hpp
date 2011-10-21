@@ -18,9 +18,9 @@ struct Face
 {
   Cell *cell;
   std::vector<double> start, end; // Endpoints of the face
-  short int orientation;     // Orientation of this face
-  double length;             // Length of the face
-  double distance;           // distance to center
+  short int orientation;          // Orientation of this face
+  double length;                  // Length of the face
+  double distance;                // distance to center
 
   Face(Cell *incell, std::vector<double> instart, std::vector<double> inend);
 };
@@ -31,11 +31,13 @@ class Cell
     std::vector<double> x;             // The physical location of the center of this cell
     std::vector<double> data;          // The actual data this node contains
 
-    std::vector<Neighboor> neighboors; // Pointers to neighbooring cells as defined by the Delauny triangulation
-    double area;                  // The area of this cell
+    std::vector<Neighboor> neighboors; // Pointers to neighbooring cells as defined by 
+                                       //  the Delauny triangulation
+    double area;                       // The area of this cell
     std::vector<Face> faces;           // The faces that define this area
 
-    bool active;                  // True if this node is active, false if it is a ghost zone
+    bool active;                       // True if this node is active, false if it is i
+                                       //  a ghost zone
     std::vector<int> nodes;            // ID's of the MPI nodes this node is defined on.
 
     Cell(std::vector<double> ix, int ndata, bool iactive=true) : x(ix), active(iactive) {

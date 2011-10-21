@@ -22,7 +22,8 @@ Boundary::Boundary(Mesh *mesh, vector<double> instart, vector<double> inend) : s
 
 bool Mesh::add_cell(Cell *item)
 {
-  // We test that the center of the cell is on the correct side of the boundary by taking the cross product
+  // We test that the center of the cell is on the correct side 
+  // of the boundary by taking the cross product
   for( auto b = boundaries.begin(); b != boundaries.end(); b++ ) {
     if ( ( ( b->end[0] - b->start[0])*(item->x[1] - b->start[1]) - 
            ( b->end[1] - b->start[1])*(item->x[0] - b->start[0])   )  
@@ -83,26 +84,23 @@ bool Mesh::tesselate()
   
   in.numberofsegments = 0;
   in.numberofholes = 0;
-  in.numberofregions = 1;
-  in.regionlist = (double *) malloc(in.numberofregions * 4 * sizeof(double));
-  in.regionlist[0] = 0.5;
-  in.regionlist[1] = 0.5;
-  in.regionlist[2] = 7.0;           // Regional Attribute for whole mesh
-  in.regionlist[3] = 0.1;           // Area Constraint
+  in.numberofregions = 0;
+  in.regionlist = (double *) NULL;
 
-  mid.pointlist = (double *) NULL;            
-  mid.pointmarkerlist = (int *) NULL; 
-  mid.trianglelist = (int *) NULL;
+  mid.pointlist             = (double *) NULL;
+  mid.pointattributelist    = (double *) NULL;
+  mid.pointmarkerlist       = (int *) NULL;
+  mid.trianglelist          = (int *) NULL;
   mid.triangleattributelist = (double *) NULL;
-  mid.neighborlist = (int *) NULL;
-  mid.segmentlist = (int *) NULL;
-  mid.segmentmarkerlist = (int *) NULL;
-  mid.edgelist = (int *) NULL;
-  mid.edgemarkerlist = (int *) NULL;
-
-  vorout.pointlist = (double *) NULL;
-  vorout.edgelist = (int *) NULL;
-  vorout.normlist = (double *) NULL;
+  mid.neighborlist          = (int *) NULL;
+  mid.segmentlist           = (int *) NULL;
+  mid.segmentmarkerlist     = (int *) NULL;
+  mid.edgelist              = (int *) NULL;
+  mid.edgemarkerlist        = (int *) NULL;
+  
+  vorout.pointlist          = (double *) NULL;
+  vorout.edgelist           = (int *) NULL;
+  vorout.normlist           = (double *) NULL;
 
 /*
  * -c  Encloses the convex hull with segments.
@@ -158,7 +156,6 @@ bool Mesh::tesselate()
 
   free(in.pointlist);
   free(in.pointmarkerlist);
-  free(in.regionlist);
 
   free(mid.pointlist);
   free(mid.pointmarkerlist);
@@ -182,7 +179,9 @@ void Mesh::write(FILE *fd)
 {
   fprintf(fd, "%f %f ",center[0], center[1]);
   for( auto b = boundaries.begin(); b != boundaries.end(); b++) {
-    fprintf(fd, "%f %f %f %f %d ",b->start[0], b->start[1], b->end[0], b->end[1], b->orientation);
+    fprintf(fd, "%f %f %f %f %d ",b->start[0], b->start[1], 
+                                  b->end  [0], b->end  [1], 
+                                  b->orientation);
   }
   fprintf(fd, "\n");
 
